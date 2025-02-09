@@ -2,11 +2,15 @@ package com.example.cashmap;
 
 import android.os.Bundle;
 
+import androidx.activity.EdgeToEdge;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.example.cashmap.data.*;
@@ -59,11 +63,13 @@ public class onboarding extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       /* WindowCompat.setDecorFitsSystemWindows(requireActivity().getWindow(), false);*/
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
 
     private ListView Banks_List;
     private List<cashmap_onboarding_data> Banks;
@@ -84,7 +90,18 @@ public class onboarding extends Fragment {
         Adapter = new cashmap_onboarding_adapter(getContext(), Banks);
         Banks_List.setAdapter(Adapter);
 
+        Button button = view.findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_onboarding_to_home2);
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
+
+
 }

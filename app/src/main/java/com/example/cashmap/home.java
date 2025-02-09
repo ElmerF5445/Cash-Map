@@ -3,10 +3,19 @@ package com.example.cashmap;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+
+import com.example.cashmap.data.cashmap_home_data;
+import com.example.cashmap.adapters.cashmap_home_adapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +64,34 @@ public class home extends Fragment {
         }
     }
 
+    private ListView ATM_List;
+    private List<cashmap_home_data> ATMs;
+    private cashmap_home_adapter Adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Button Change_Bank = view.findViewById(R.id.Button_ChangeBank);
+
+        // Brought to you by Reniel Baldove
+        Change_Bank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(view).navigate(R.id.action_home2_to_onboarding);
+            }
+        });
+
+        ATM_List = view.findViewById(R.id.ATM_List);
+
+        ATMs = new ArrayList<>();
+        ATMs.add(new cashmap_home_data("Landbank ATM 1, 45 Bayan-bayanan Avenue", "Active"));
+        ATMs.add(new cashmap_home_data("Landbank ATM 2, 45 Bayan-bayanan Avenue", "Inactive"));
+
+        Adapter = new cashmap_home_adapter(getContext(), ATMs);
+        ATM_List.setAdapter(Adapter);
+
+        return view;
     }
 }
